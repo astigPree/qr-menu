@@ -1,5 +1,5 @@
 
-# README[ UNDER CONSTRUCTIONS ] !!!!!!!
+# REPOSITORY UNDER CONSTRUCTIONS !!!!!!!
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue?style=flat-square)
 ![Django](https://img.shields.io/badge/Django-5.x-green?style=flat-square)
@@ -240,4 +240,4 @@ Including:
 * analytics
 * customer engagement
  
- "# qr-menu" 
+ 
