@@ -1,0 +1,74 @@
+{% extends "menu/client_base.html" %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">Menu items</p>
+            <h1>Products</h1>
+            <p>Update prices, descriptions, images, featured status, and availability.</p>
+        </div>
+        <a class="primary-action" href="{% url 'menu:client_product_add' %}">Add Product</a>
+    </header>
+
+    <section class="panel">
+        <form class="filters" method="get">
+            <input class="form-control" type="search" name="q" value="{{ query }}" placeholder="Search products">
+            <select class="form-control" name="category">
+                <option value="">All categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category_id == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <select class="form-control" name="availability">
+                <option value="">All availability</option>
+                <option value="available" {% if availability == "available" %}selected{% endif %}>Available</option>
+                <option value="unavailable" {% if availability == "unavailable" %}selected{% endif %}>Unavailable</option>
+            </select>
+            <button class="secondary-action" type="submit">Filter</button>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Featured</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td class="product-cell" data-label="Product">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                {% endif %}
+                                <span><strong>{{ product.name }}</strong><small>{{ product.description|truncatechars:64 }}</small></span>
+                            </td>
+                            <td data-label="Category">{{ product.category.name }}</td>
+                            <td data-label="Price">P{{ product.price }}</td>
+                            <td data-label="Status">{% if product.is_available %}<span class="pill active-pill">Available</span>{% else %}<span class="pill danger-pill">Unavailable</span>{% endif %}</td>
+                            <td data-label="Featured">{% if product.is_featured %}<span class="pill active-pill">Featured</span>{% else %}<span class="pill muted-pill">No</span>{% endif %}</td>
+                            <td data-label="Actions">
+                                <div class="row-actions">
+                                    <a class="table-action" href="{% url 'menu:client_product_edit' product.pk %}">Edit</a>
+                                    <form method="post" action="{% url 'menu:client_product_toggle' product.pk %}">
+                                        {% csrf_token %}
+                                        <button class="table-action" type="submit">{% if product.is_available %}Mark Out{% else %}Mark Available{% endif %}</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="6" class="empty-cell">No products yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

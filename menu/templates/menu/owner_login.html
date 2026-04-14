@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Owner Login | BillingKo QR Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'menu/owner-dashboard.css' %}">
+</head>
+<body class="login-body">
+    <main class="login-shell">
+        <section class="login-panel">
+            <div class="login-brand">
+                <span class="brand-logo-wrap">
+                    <img src="{% static 'assets/logo-menu.webp' %}" alt="BillingKo QR Menu logo">
+                </span>
+                <div>
+                    <p class="eyebrow">System owner access</p>
+                    <h1>Sign in to the owner panel</h1>
+                    <p>Manage businesses, menu data, QR locations, and platform operations.</p>
+                </div>
+            </div>
+
+            {% if form.errors %}
+                <p class="login-error">Invalid owner credentials. Please try again.</p>
+            {% endif %}
+
+            {% if next %}
+                <p class="readonly-note">Please sign in to continue.</p>
+            {% endif %}
+
+            <form method="post" action="{% url 'menu:owner_login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                <label>
+                    <span>Username</span>
+                    <input class="form-control" type="text" name="username" autocomplete="username" required autofocus>
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input class="form-control" type="password" name="password" autocomplete="current-password" required>
+                </label>
+                <button class="primary-action" type="submit">Sign In</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

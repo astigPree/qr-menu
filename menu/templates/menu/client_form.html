@@ -1,0 +1,41 @@
+{% extends "menu/client_base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">Self-service update</p>
+            <h1>{{ title }}</h1>
+            <p>{{ subtitle }}</p>
+            {% if readonly_status %}
+                <p class="readonly-note">Account status: {{ readonly_status }}. Status changes are controlled by the platform owner.</p>
+            {% endif %}
+        </div>
+        <a class="secondary-action" href="{{ back_url }}">Back</a>
+    </header>
+
+    <section class="panel form-panel">
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-errors">{{ form.non_field_errors }}</div>
+            {% endif %}
+            <div class="form-grid">
+                {% for field in form %}
+                    <label class="{% if field.field.widget.input_type == 'checkbox' %}checkbox-row{% endif %}">
+                        <span>{{ field.label }}</span>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </label>
+                {% endfor %}
+            </div>
+            <div class="form-actions">
+                <button class="primary-action" type="submit">Save</button>
+                <a class="secondary-action" href="{{ back_url }}">Cancel</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}

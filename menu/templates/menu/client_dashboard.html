@@ -1,0 +1,74 @@
+{% extends "menu/client_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <header class="page-header client-hero">
+        <div>
+            <p class="eyebrow">Your menu is live</p>
+            <h1>{{ business.name }} Dashboard</h1>
+            <p>Update your menu, manage availability, and check your QR links from one place.</p>
+        </div>
+        <div class="header-actions">
+            <a class="primary-action" href="{% url 'menu:client_product_add' %}">Add Product</a>
+            {% if preview_url %}
+                <a class="secondary-action" href="{{ preview_url }}" target="_blank" rel="noopener">Preview Menu</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <section class="stats-grid" aria-label="Business menu totals">
+        {% for stat in stats %}
+            <article class="stat-card">
+                <span>{{ stat.label }}</span>
+                <strong>{{ stat.value }}</strong>
+            </article>
+        {% endfor %}
+    </section>
+
+    <section class="dashboard-grid">
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Quick actions</p>
+                    <h2>Update Menu</h2>
+                </div>
+            </div>
+            <div class="action-grid">
+                <a href="{% url 'menu:client_product_add' %}"><strong>Add Product</strong><small>Create a new menu item.</small></a>
+                <a href="{% url 'menu:client_category_add' %}"><strong>Add Category</strong><small>Organize your menu.</small></a>
+                <a href="{% url 'menu:client_qr_location_add' %}"><strong>Add QR Location</strong><small>Create a table or room link.</small></a>
+                <a href="{% url 'menu:client_profile' %}"><strong>Edit Profile</strong><small>Update business details.</small></a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Recent products</p>
+                    <h2>Latest Items</h2>
+                </div>
+            </div>
+            <div class="compact-list">
+                {% for product in recent_products %}
+                    <article>
+                        <div>
+                            <strong>{{ product.name }}</strong>
+                            <small>{{ product.category.name }} - P{{ product.price }}</small>
+                        </div>
+                        {% if product.is_available %}
+                            <span class="pill active-pill">Available</span>
+                        {% else %}
+                            <span class="pill danger-pill">Unavailable</span>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <div class="empty-state">
+                        <h3>No products yet</h3>
+                        <p>Add your first product to start building your QR menu.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

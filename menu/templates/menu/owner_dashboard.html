@@ -1,0 +1,91 @@
+{% extends "menu/owner_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Platform owner control panel</p>
+            <h1>System Owner Dashboard</h1>
+            <p>Register businesses, manage menus, create QR locations, and preview customer-facing menus.</p>
+        </div>
+        <a class="primary-action" href="{% url 'menu:owner_business_add' %}">Add Business</a>
+    </header>
+
+    <section class="stats-grid" aria-label="System totals">
+        {% for stat in stats %}
+            <article class="stat-card">
+                <span>{{ stat.label }}</span>
+                <strong>{{ stat.value }}</strong>
+            </article>
+        {% endfor %}
+    </section>
+
+    <section class="panel-grid">
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Owner modules</p>
+                    <h2>Manage the System</h2>
+                </div>
+            </div>
+            <div class="module-list">
+                {% for link in admin_links %}
+                    <a class="module-card" href="{{ link.url }}">
+                        <span>
+                            <strong>{{ link.label }}</strong>
+                            <small>{{ link.description }}</small>
+                        </span>
+                        <b>Open</b>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Preview access</p>
+                    <h2>Open Customer Menus</h2>
+                </div>
+            </div>
+            <div class="preview-list">
+                {% for item in preview_links %}
+                    <article class="preview-card">
+                        <div>
+                            <strong>{{ item.business.name }}</strong>
+                            <small>{{ item.business.get_business_type_display }} - {% if item.business.is_active %}Active{% else %}Inactive{% endif %}</small>
+                        </div>
+                        {% if item.url %}
+                            <a href="{{ item.url }}" target="_blank" rel="noopener">Preview Menu</a>
+                        {% else %}
+                            <a href="{% url 'menu:owner_qr_location_add' %}">Add QR Location</a>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <div class="empty-state">
+                        <h3>No businesses yet</h3>
+                        <p>Create your first business, then add categories, products, and QR locations.</p>
+                        <a href="{% url 'menu:owner_business_add' %}">Create Business</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-heading">
+            <div>
+                <p class="eyebrow">Suggested flow</p>
+                <h2>Onboard a Business</h2>
+            </div>
+        </div>
+        <ol class="flow-list">
+            <li><span>1</span><p>Create a business profile with contact details, type, status, and logo.</p></li>
+            <li><span>2</span><p>Add active categories for that business and set their sort order.</p></li>
+            <li><span>3</span><p>Add products with prices, photos, featured status, and availability.</p></li>
+            <li><span>4</span><p>Create QR locations such as table-1, counter, or ktv-room-2.</p></li>
+            <li><span>5</span><p>Use Preview Menu to confirm the customer experience before printing QR codes.</p></li>
+        </ol>
+    </section>
+{% endblock %}

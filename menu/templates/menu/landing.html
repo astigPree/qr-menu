@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A QR menu system for restaurants, cafes, KTV, and small businesses that cuts printing costs, speeds service, and keeps menus updated in real time.">
+    <title>QR Menu System for Restaurants, Cafes, and Small Businesses</title>
+    <link rel="icon" href="{% static 'assets/bar-icon.png' %}">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'menu/styles.css' %}">
+</head>
+<body>
+    <header class="site-header" aria-label="Main navigation">
+        <a class="brand" href="#top" aria-label="BillingKo QR Menu home">
+            <img class="brand-logo" src="{% static 'assets/logo.png' %}" alt="BillingKo QR Menu logo">
+            <span>BillingKo QR Menu</span>
+        </a>
+        <nav class="nav-links" aria-label="Page sections">
+            <a href="#benefits">Benefits</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#pricing">Pricing</a>
+        </nav>
+        <a class="header-cta" href="mailto:techmakie@gmail.com?subject=QR%20Menu%20Demo%20Request">Request Demo</a>
+    </header>
+
+    <main id="top">
+        <section class="hero section-band">
+            <div class="section-inner hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">QR menu system for growing food and service businesses</p>
+                    <h1>Turn Your Menu Into a Smart Digital Experience</h1>
+                    <p class="hero-subhead">Let customers scan, browse, and order instantly, while you update your menu anytime without reprinting.</p>
+                    <div class="hero-actions" aria-label="Primary actions">
+                        <a class="btn btn-primary" href="mailto:techmakie@gmail.com?subject=Start%20My%20Digital%20Menu">Get Started Now</a>
+                        <a class="btn btn-secondary" href="mailto:techmakie@gmail.com?subject=QR%20Menu%20Demo%20Request">Request Demo</a>
+                    </div>
+                    <ul class="value-points" aria-label="Key value points">
+                        <li>No printing costs</li>
+                        <li>Real-time menu updates</li>
+                        <li>Faster customer service</li>
+                        <li>Mobile-friendly experience</li>
+                    </ul>
+                </div>
+
+                <div class="hero-visual" aria-label="Digital menu preview">
+                    <img class="service-photo" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="Restaurant table with guests browsing a menu">
+                    <div class="phone-preview">
+                        <div class="phone-bar"></div>
+                        <div class="menu-top">
+                            <span>Today&apos;s Menu</span>
+                            <strong>Open</strong>
+                        </div>
+                        <div class="category-tabs">
+                            <span>Popular</span>
+                            <span>Meals</span>
+                            <span>Drinks</span>
+                        </div>
+                        <article class="menu-item">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=220&q=80" alt="Featured menu item">
+                            <div>
+                                <strong>Chef&apos;s Bowl</strong>
+                                <p>Best seller</p>
+                            </div>
+                            <b>P189</b>
+                        </article>
+                        <article class="menu-item">
+                            <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=220&q=80" alt="Iced drink menu item">
+                            <div>
+                                <strong>Iced Fruit Tea</strong>
+                                <p>Ready now</p>
+                            </div>
+                            <b>P89</b>
+                        </article>
+                        <div class="availability">Unavailable items hidden instantly</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-band problem-band">
+            <div class="section-inner split-layout">
+                <div>
+                    <p class="eyebrow">The daily menu problem</p>
+                    <h2>Still Using Printed Menus?</h2>
+                    <p>Printed menus slow down updates, add recurring costs, and make it harder to guide customers toward your best offers.</p>
+                </div>
+                <div class="issue-list">
+                    <p>Menus get outdated quickly</p>
+                    <p>Reprinting costs add up</p>
+                    <p>Staff answers repetitive questions</p>
+                    <p>Customers wait longer to decide</p>
+                    <p>Best-selling items are harder to highlight</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-band">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <p class="eyebrow">The better way forward</p>
+                    <h2>A Smarter Way to Serve Your Customers</h2>
+                    <p>Give your customers a clean digital menu they can open from any phone, while your team keeps pricing, items, and availability current from one place.</p>
+                </div>
+                <div class="feature-grid">
+                    <article>
+                        <h3>QR code access</h3>
+                        <p>No app needed. Customers scan and browse right away.</p>
+                    </article>
+                    <article>
+                        <h3>Fast mobile menu</h3>
+                        <p>Clear categories, product photos, and simple item details.</p>
+                    </article>
+                    <article>
+                        <h3>Real-time updates</h3>
+                        <p>Change prices, add items, and pause sold-out products anytime.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="section-band steps-band">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <p class="eyebrow">Simple setup</p>
+                    <h2>How It Works</h2>
+                    <p>Start with table or counter QR codes and give customers instant menu access during every visit.</p>
+                </div>
+                <div class="steps">
+                    <article><span>1</span><h3>Place QR codes</h3><p>Put QR codes on tables, counters, or printed stands.</p></article>
+                    <article><span>2</span><h3>Customers scan</h3><p>They use their phone camera, with no app download.</p></article>
+                    <article><span>3</span><h3>Menu opens instantly</h3><p>They browse categories, products, and prices.</p></article>
+                    <article><span>4</span><h3>Staff focuses on service</h3><p>Your team spends less time repeating menu details.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-band demo-section">
+            <div class="section-inner demo-grid">
+                <div class="demo-copy">
+                    <p class="eyebrow">Visual demo</p>
+                    <h2>Fast, Clean, and Easy to Browse</h2>
+                    <p>Customers see categories, product details, and availability in a layout built for quick decisions.</p>
+                    <a class="text-link" href="mailto:techmakie@gmail.com?subject=QR%20Menu%20Preview%20Request">See a sample menu</a>
+                </div>
+                <div class="mockup-row" aria-label="Menu screens">
+                    <div class="screen-mock">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=360&q=80" alt="Digital menu product display preview">
+                        <h3>Product display</h3>
+                        <p>Best sellers stay visible.</p>
+                    </div>
+                    <div class="screen-mock">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=360&q=80" alt="Digital menu drink category preview">
+                        <h3>Category navigation</h3>
+                        <p>Guests find items faster.</p>
+                    </div>
+                    <div class="screen-mock">
+                        <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=360&q=80" alt="Cafe counter digital menu preview">
+                        <h3>Mobile menu view</h3>
+                        <p>Readable on any phone.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="section-band benefits-band">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <p class="eyebrow">Business impact</p>
+                    <h2>Why Businesses Are Switching to QR Menus</h2>
+                </div>
+                <div class="benefit-grid">
+                    <article><h3>Faster customer decisions</h3><p>Clear menus help guests choose without waiting for staff.</p></article>
+                    <article><h3>Reduced staff workload</h3><p>Less time explaining items and more time serving customers.</p></article>
+                    <article><h3>Increased average order value</h3><p>Highlight best sellers, add-ons, and premium items.</p></article>
+                    <article><h3>Modern brand experience</h3><p>Give guests a smooth experience that feels current and professional.</p></article>
+                    <article><h3>Easy to manage</h3><p>Update pricing, items, and availability without reprinting.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-band operations-band">
+            <div class="section-inner split-layout">
+                <div>
+                    <p class="eyebrow">Made for daily operations</p>
+                    <h2>Built for Real Business Operations</h2>
+                    <p>Works for cafes, restaurants, KTV rooms, food stalls, salons, and small businesses that need faster updates and a more reliable customer flow.</p>
+                </div>
+                <div class="operations-list">
+                    <p>Scales as your business grows</p>
+                    <p>Ready to expand into ordering and automation</p>
+                    <p>Designed for daily use, not just display</p>
+                    <p>Fits single-location and multi-branch workflows</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-band proof-band">
+            <div class="section-inner">
+                <div class="section-heading">
+                    <p class="eyebrow">What teams notice first</p>
+                    <h2>Simple Changes That Customers Feel</h2>
+                </div>
+                <div class="testimonial-grid">
+                    <blockquote>
+                        <p>&ldquo;Our customers love how easy it is to browse the menu now.&rdquo;</p>
+                        <cite>Cafe operator</cite>
+                    </blockquote>
+                    <blockquote>
+                        <p>&ldquo;We stopped reprinting menus completely.&rdquo;</p>
+                        <cite>Restaurant owner</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="section-band offer-band">
+            <div class="section-inner offer-box">
+                <div>
+                    <p class="eyebrow">Simple offer</p>
+                    <h2>Start Your Digital Menu Today</h2>
+                    <p>Choose a one-time setup or a monthly plan with updates and support.</p>
+                </div>
+                <div class="offer-options">
+                    <article>
+                        <h3>One-time setup</h3>
+                        <p>Launch your digital menu and QR codes quickly.</p>
+                    </article>
+                    <article>
+                        <h3>Monthly support</h3>
+                        <p>Keep your menu updated with ongoing help.</p>
+                    </article>
+                </div>
+                <a class="btn btn-primary" href="mailto:techmakie@gmail.com?subject=Start%20My%20Digital%20Menu">Start Your Digital Menu Today</a>
+            </div>
+        </section>
+
+        <section class="section-band final-cta">
+            <div class="section-inner">
+                <p class="eyebrow">Ready when you are</p>
+                <h2>Upgrade Your Menu Experience Today</h2>
+                <p>Cut printing costs, speed up customer decisions, and make your menu easier to manage.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="mailto:techmakie@gmail.com?subject=Get%20Started%20with%20QR%20Menu">Get Started</a>
+                    <a class="btn btn-secondary" href="mailto:techmakie@gmail.com?subject=Book%20a%20QR%20Menu%20Demo">Book a Demo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <a class="brand" href="#top" aria-label="BillingKo QR Menu home">
+                    <img class="brand-logo" src="{% static 'assets/logo.png' %}" alt="BillingKo QR Menu logo">
+                    <span>BillingKo QR Menu</span>
+                </a>
+                <p>Digital menus for restaurants, cafes, KTV, and small businesses.</p>
+            </div>
+            <div class="footer-contact">
+                <a href="mailto:techmakie@gmail.com">techmakie@gmail.com</a>
+                <a href="https://www.facebook.com/makietech.guanzon/" rel="noopener">Facebook Page</a>
+                <span>Contact: +63 900 000 0000</span>
+                <span>&copy; 2026 BillingKo QR Menu. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

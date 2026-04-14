@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Business Dashboard{% endblock %} | BillingKo QR Menu</title>
+    <link rel="icon" href="{% static 'assets/bar-icon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'menu/client-dashboard.css' %}">
+</head>
+<body>
+    <div class="mobile-client-bar">
+        <button class="mobile-menu-toggle" type="button" aria-controls="clientSidebar" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+            Menu
+        </button>
+        <a class="mobile-client-brand" href="{% url 'menu:client_dashboard' %}">
+            <span class="logo-tile">
+                <img src="{% static 'assets/logo-menu.webp' %}" alt="BillingKo QR Menu logo">
+            </span>
+            <strong>{{ business.name|default:"Menu Manager" }}</strong>
+        </a>
+    </div>
+    <button class="sidebar-backdrop" type="button" data-close-client-sidebar aria-label="Close navigation"></button>
+
+    <aside class="client-sidebar" id="clientSidebar" aria-label="Business dashboard navigation">
+        <div class="sidebar-mobile-head">
+            <strong>Navigation</strong>
+            <button type="button" data-close-client-sidebar>Close</button>
+        </div>
+        <a class="client-brand" href="{% url 'menu:client_dashboard' %}">
+            <span class="logo-tile">
+                <img src="{% static 'assets/logo-menu.webp' %}" alt="BillingKo QR Menu logo">
+            </span>
+            <span>
+                <strong>{{ business.name|default:"Business Dashboard" }}</strong>
+                <small>Menu Manager</small>
+            </span>
+        </a>
+        {% if business %}
+            <nav>
+                <a class="{% if active_page == 'dashboard' %}active{% endif %}" href="{% url 'menu:client_dashboard' %}">Dashboard</a>
+                <a class="{% if active_page == 'profile' %}active{% endif %}" href="{% url 'menu:client_profile' %}">Profile</a>
+                <a class="{% if active_page == 'categories' %}active{% endif %}" href="{% url 'menu:client_categories' %}">Categories</a>
+                <a class="{% if active_page == 'products' %}active{% endif %}" href="{% url 'menu:client_products' %}">Products</a>
+                <a class="{% if active_page == 'qr_locations' %}active{% endif %}" href="{% url 'menu:client_qr_locations' %}">QR Links</a>
+                {% if business.qr_locations.first %}
+                    <a href="{% url 'menu:customer_menu' business.qr_locations.first.code %}" target="_blank" rel="noopener">Preview</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+        <form method="post" action="{% url 'menu:client_logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </aside>
+
+    <main class="client-main">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="message {{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <script src="{% static 'menu/client-dashboard.js' %}" defer></script>
+    <script src="{% static 'menu/image-compress.js' %}" defer></script>
+</body>
+</html>

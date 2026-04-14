@@ -1,0 +1,105 @@
+{% extends "menu/client_base.html" %}
+{% load static %}
+
+{% block title %}Business Profile{% endblock %}
+
+{% block content %}
+    <header class="page-header client-hero">
+        <div>
+            <p class="eyebrow">Business profile</p>
+            <h1>{{ business.name }}</h1>
+            <p>Keep your business details and logo updated for your customer-facing menu.</p>
+            <p class="readonly-note">Account status: {{ readonly_status }}. Status changes are controlled by the platform owner.</p>
+        </div>
+        <a class="secondary-action" href="{% url 'menu:client_dashboard' %}">Back to Dashboard</a>
+    </header>
+
+    <section class="profile-layout">
+        <aside class="profile-preview panel">
+            <p class="eyebrow">Logo preview</p>
+            <div class="profile-logo-frame">
+                {% if business.logo %}
+                    <img src="{{ business.logo.url }}" alt="{{ business.name }} logo">
+                {% else %}
+                    <img src="{% static 'assets/logo-menu.webp' %}" alt="Default menu logo">
+                {% endif %}
+            </div>
+            <h2>{{ business.name }}</h2>
+            <p>{{ business.description|default:"Add a short business description so your profile feels complete." }}</p>
+            <dl class="profile-meta">
+                <div>
+                    <dt>Type</dt>
+                    <dd>{{ business.get_business_type_display }}</dd>
+                </div>
+                <div>
+                    <dt>Status</dt>
+                    <dd>{% if business.is_active %}<span class="pill active-pill">Active</span>{% else %}<span class="pill muted-pill">Inactive</span>{% endif %}</dd>
+                </div>
+                <div>
+                    <dt>Contact</dt>
+                    <dd>{{ business.contact_number|default:"Not set" }}</dd>
+                </div>
+                <div>
+                    <dt>Email</dt>
+                    <dd>{{ business.email|default:"Not set" }}</dd>
+                </div>
+            </dl>
+        </aside>
+
+        <section class="panel form-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Editable details</p>
+                    <h2>Update Profile</h2>
+                </div>
+            </div>
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-errors">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <div class="profile-form-sections">
+                    <fieldset>
+                        <legend>Business Details</legend>
+                        <p>These details identify your business on the menu dashboard and customer-facing pages.</p>
+                        <div class="form-grid">
+                            {% include "menu/partials/profile_field.html" with field=form.name %}
+                            {% include "menu/partials/profile_field.html" with field=form.business_type %}
+                            {% include "menu/partials/profile_field.html" with field=form.description wide=True %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Contact Information</legend>
+                        <p>Use the contact details customers or staff should recognize for this business.</p>
+                        <div class="form-grid">
+                            {% include "menu/partials/profile_field.html" with field=form.contact_person %}
+                            {% include "menu/partials/profile_field.html" with field=form.contact_number %}
+                            {% include "menu/partials/profile_field.html" with field=form.email %}
+                            {% include "menu/partials/profile_field.html" with field=form.address wide=True %}
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Logo</legend>
+                        <p>The preview card on the left shows the current logo. Upload a new file here to replace it.</p>
+                        <div class="logo-upload-row">
+                            <div class="mini-logo-preview">
+                                {% if business.logo %}
+                                    <img src="{{ business.logo.url }}" alt="{{ business.name }} logo">
+                                {% else %}
+                                    <img src="{% static 'assets/logo-menu.webp' %}" alt="Default menu logo">
+                                {% endif %}
+                            </div>
+                            {% include "menu/partials/profile_field.html" with field=form.logo %}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form-actions">
+                    <button class="primary-action" type="submit">Save Profile</button>
+                    <a class="secondary-action" href="{% url 'menu:client_dashboard' %}">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </section>
+{% endblock %}

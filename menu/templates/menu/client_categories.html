@@ -1,0 +1,51 @@
+{% extends "menu/client_base.html" %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">Menu organization</p>
+            <h1>Categories</h1>
+            <p>Manage the sections customers use to browse your menu.</p>
+        </div>
+        <a class="primary-action" href="{% url 'menu:client_category_add' %}">Add Category</a>
+    </header>
+
+    <section class="panel">
+        <form class="filters" method="get">
+            <input class="form-control" type="search" name="q" value="{{ query }}" placeholder="Search categories">
+            <select class="form-control" name="status">
+                <option value="">All statuses</option>
+                <option value="active" {% if status == "active" %}selected{% endif %}>Active</option>
+                <option value="inactive" {% if status == "inactive" %}selected{% endif %}>Inactive</option>
+            </select>
+            <button class="secondary-action" type="submit">Filter</button>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Sort</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td data-label="Category"><strong>{{ category.name }}</strong></td>
+                            <td data-label="Sort">{{ category.sort_order }}</td>
+                            <td data-label="Status">{% if category.is_active %}<span class="pill active-pill">Active</span>{% else %}<span class="pill muted-pill">Inactive</span>{% endif %}</td>
+                            <td data-label="Action"><a class="table-action" href="{% url 'menu:client_category_edit' category.pk %}">Edit</a></td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="4" class="empty-cell">No categories yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

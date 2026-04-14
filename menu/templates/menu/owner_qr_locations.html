@@ -1,0 +1,61 @@
+{% extends "menu/owner_base.html" %}
+
+{% block title %}QR Locations{% endblock %}
+
+{% block content %}
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">QR location management</p>
+            <h1>QR Locations</h1>
+            <p>Create table, counter, and room entry points for each business menu.</p>
+        </div>
+        <a class="primary-action" href="{% url 'menu:owner_qr_location_add' %}">Add QR Location</a>
+    </header>
+
+    <section class="panel">
+        <form class="filters" method="get">
+            <input class="form-control" type="search" name="q" value="{{ query }}" placeholder="Search code">
+            <select class="form-control" name="business">
+                <option value="">All businesses</option>
+                {% for business in businesses %}
+                    <option value="{{ business.id }}" {% if business_id == business.id|stringformat:"s" %}selected{% endif %}>{{ business.name }}</option>
+                {% endfor %}
+            </select>
+            <select class="form-control" name="status">
+                <option value="">All statuses</option>
+                <option value="active" {% if status == "active" %}selected{% endif %}>Active</option>
+                <option value="inactive" {% if status == "inactive" %}selected{% endif %}>Inactive</option>
+            </select>
+            <button class="secondary-action" type="submit">Filter</button>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Business</th>
+                        <th>Menu Link</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for location in qr_locations %}
+                        <tr>
+                            <td><strong>{{ location.label }}</strong><small>{{ location.code }}</small></td>
+                            <td>{{ location.business.name }}</td>
+                            <td><a class="table-action" href="{% url 'menu:customer_menu' location.code %}" target="_blank" rel="noopener">/m/{{ location.code }}</a></td>
+                            <td>{% if location.is_active %}<span class="pill active-pill">Active</span>{% else %}<span class="pill muted-pill">Inactive</span>{% endif %}</td>
+                            <td>{{ location.created_at|date:"M d, Y" }}</td>
+                            <td><a class="table-action" href="{% url 'menu:owner_qr_location_edit' location.pk %}">Edit</a></td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="6" class="empty-cell">No QR locations found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "menu/client_base.html" %}
+
+{% block title %}QR Locations{% endblock %}
+
+{% block content %}
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">Customer entry points</p>
+            <h1>QR Locations</h1>
+            <p>Create and manage table, counter, and room links for your live menu.</p>
+        </div>
+        <a class="primary-action" href="{% url 'menu:client_qr_location_add' %}">Add QR Location</a>
+    </header>
+
+    <section class="panel">
+        <form class="filters" method="get">
+            <input class="form-control" type="search" name="q" value="{{ query }}" placeholder="Search code or label">
+            <select class="form-control" name="status">
+                <option value="">All statuses</option>
+                <option value="active" {% if status == "active" %}selected{% endif %}>Active</option>
+                <option value="inactive" {% if status == "inactive" %}selected{% endif %}>Inactive</option>
+            </select>
+            <button class="secondary-action" type="submit">Filter</button>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Menu Link</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for location in qr_locations %}
+                        <tr>
+                            <td data-label="Location"><strong>{{ location.label }}</strong><small>{{ location.code }}</small></td>
+                            <td data-label="Menu Link"><a class="table-action" href="{% url 'menu:customer_menu' location.code %}" target="_blank" rel="noopener">/m/{{ location.code }}</a></td>
+                            <td data-label="Status">{% if location.is_active %}<span class="pill active-pill">Active</span>{% else %}<span class="pill muted-pill">Inactive</span>{% endif %}</td>
+                            <td data-label="Created">{{ location.created_at|date:"M d, Y" }}</td>
+                            <td data-label="Action"><a class="table-action" href="{% url 'menu:client_qr_location_edit' location.pk %}">Edit</a></td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="5" class="empty-cell">No QR locations yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

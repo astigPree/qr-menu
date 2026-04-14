@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}System Owner Panel{% endblock %} | BillingKo QR Menu</title>
+    <link rel="icon" href="{% static 'assets/bar-icon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'menu/owner-dashboard.css' %}">
+</head>
+<body>
+    <aside class="sidebar" aria-label="Owner navigation">
+        <a class="brand" href="{% url 'menu:owner_dashboard' %}">
+            <span class="brand-logo-wrap">
+                <img src="{% static 'assets/logo-menu.webp' %}" alt="BillingKo QR Menu logo">
+            </span>
+            <span>BillingKo QR Menu</span>
+        </a>
+        <nav>
+            <a class="{% if active_page == 'dashboard' %}active{% endif %}" href="{% url 'menu:owner_dashboard' %}">Dashboard</a>
+            <a class="{% if active_page == 'businesses' %}active{% endif %}" href="{% url 'menu:owner_businesses' %}">Businesses</a>
+            <a class="{% if active_page == 'categories' %}active{% endif %}" href="{% url 'menu:owner_categories' %}">Categories</a>
+            <a class="{% if active_page == 'products' %}active{% endif %}" href="{% url 'menu:owner_products' %}">Products</a>
+            <a class="{% if active_page == 'qr_locations' %}active{% endif %}" href="{% url 'menu:owner_qr_locations' %}">QR Locations</a>
+        </nav>
+        <form method="post" action="{% url 'menu:owner_logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </aside>
+
+    <main class="dashboard">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="message {{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <script src="{% static 'menu/image-compress.js' %}" defer></script>
+</body>
+</html>

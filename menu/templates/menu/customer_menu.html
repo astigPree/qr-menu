@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Customer digital menu for quick browsing on mobile.">
+    <title>{{ business_name }} Digital Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'menu/customer-menu.css' %}">
+    <script src="{% static 'menu/customer-menu.js' %}" defer></script>
+</head>
+<body>
+    <header class="menu-header">
+        <div class="brand-row">
+            <img class="brand-logo" src="{% static 'assets/logo-menu.webp' %}" alt="{{ business_name }} logo">
+            <div>
+                <p class="eyebrow">Digital Menu</p>
+                <h1>{{ business_name }}</h1>
+            </div>
+        </div>
+        <p class="scan-note">
+            {% if qr_location %}
+                {{ qr_location.label }} • Scan • Browse • Enjoy
+            {% else %}
+                Scan • Browse • Enjoy
+            {% endif %}
+        </p>
+    </header>
+
+    {% if has_menu_items %}
+        <nav class="category-nav" aria-label="Menu categories">
+            {% for category in categories %}
+                {% if category.menu_products %}
+                    <a class="{% if forloop.first %}active{% endif %}" href="#category-{{ category.id }}">{{ category.name }}</a>
+                {% endif %}
+            {% endfor %}
+        </nav>
+    {% endif %}
+
+    <main class="menu-shell">
+        {% if has_menu_items %}
+            {% for category in categories %}
+                {% if category.menu_products %}
+                <section class="category-section" id="category-{{ category.id }}" aria-labelledby="category-title-{{ category.id }}">
+                    <div class="section-title">
+                        <h2 id="category-title-{{ category.id }}">{{ category.name }}</h2>
+                        <span>{{ category.menu_products|length }} item{{ category.menu_products|length|pluralize }}</span>
+                    </div>
+
+                    <div class="product-list">
+                        {% for product in category.menu_products %}
+                            <article class="product-card {% if not product.is_available %}is-unavailable{% endif %}">
+                                <details>
+                                    <summary>
+                                        <span class="product-image-wrap">
+                                            {% if product.image %}
+                                                <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" decoding="async">
+                                            {% else %}
+                                                <span class="product-image-fallback" aria-hidden="true">{{ product.name|first }}</span>
+                                            {% endif %}
+                                        </span>
+                                        <span class="product-info">
+                                            <span class="product-topline">
+                                                <strong>{{ product.name }}</strong>
+                                                {% if product.sort_order == 0 %}
+                                                    <em>Best Seller</em>
+                                                {% endif %}
+                                            </span>
+                                            {% if product.description %}
+                                                <span class="product-description">{{ product.description|truncatechars:82 }}</span>
+                                            {% endif %}
+                                            <span class="product-meta">
+                                                <b>P{{ product.price }}</b>
+                                                {% if product.is_available %}
+                                                    <span class="status available">Available</span>
+                                                {% else %}
+                                                    <span class="status unavailable">Out of Stock</span>
+                                                {% endif %}
+                                            </span>
+                                        </span>
+                                    </summary>
+                                    <div class="product-detail">
+                                        {% if product.image %}
+                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" decoding="async">
+                                        {% endif %}
+                                        <div>
+                                            <h3>{{ product.name }}</h3>
+                                            {% if product.description %}
+                                                <p>{{ product.description }}</p>
+                                            {% else %}
+                                                <p>Ask our staff for more details about this item.</p>
+                                            {% endif %}
+                                            <div class="detail-price">P{{ product.price }}</div>
+                                            <p class="staff-note">Please approach staff to order.</p>
+                                        </div>
+                                    </div>
+                                </details>
+                            </article>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <section class="empty-menu">
+                <img class="empty-logo" src="{% static 'assets/logo-menu.webp' %}" alt="{{ business_name }} logo">
+                <h1>Menu is being updated</h1>
+                <p>Please ask our staff for today&apos;s available items.</p>
+            </section>
+        {% endif %}
+    </main>
+
+    <footer class="menu-footer">
+        <p>Please approach staff to order.</p>
+        <small>Ordering system coming soon.</small>
+    </footer>
+</body>
+</html>
