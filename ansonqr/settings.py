@@ -145,15 +145,15 @@ LOGIN_REDIRECT_URL = 'menu:client_dashboard'
 LOGOUT_REDIRECT_URL = 'menu:client_login'
 
 
-LOGGING = {
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'ERROR',
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['console'],
+#         'level': 'ERROR',
+#     },
+# }
