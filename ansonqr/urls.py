@@ -17,14 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.static import serve
 
 urlpatterns = [
     path('', include('menu.urls')),
     path('admin/', admin.site.urls),
 ]
 
-# Serve static and media files in both DEBUG and non-DEBUG mode (dev only).
-# In true production, delegate this to your web server (Nginx/Apache).
+# WhiteNoise handles static files (works with DEBUG=False).
+# Media files must be served manually since static() only works with DEBUG=True.
+# NOTE: For true production (e.g. PythonAnywhere/Nginx), configure your web
+# server to serve MEDIA_ROOT directly instead of relying on Django.
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]

@@ -32,12 +32,14 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 ALLOWED_HOSTS = [
     "billingkoqrmenu.pythonanywhere.com", 
     "localhost",
-    "127.0.0.1"
+    "127.0.0.1",
+    "192.168.1.171"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "https://billingkoqrmenu.pythonanywhere.com",
+    "http://192.168.1.171:8000"
 ]
 
 # Application definition
